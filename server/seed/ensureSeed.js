@@ -12,19 +12,45 @@ import { CATEGORIES, COURSES, EXTRA_INSTRUCTORS, QUIZZES, STUDENT_NAMES } from '
 import { slugify } from '../utils/slugify.js';
 
 // Bump this whenever the demo dataset changes: existing databases are re-seeded automatically.
-export const SEED_VERSION = 2;
+export const SEED_VERSION = 3;
 
 let seeding = null;
 
 const meta = () => mongoose.connection.db.collection('meta');
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Cross-instance lock stored in MongoDB, so concurrent serverless instances
+// never seed at the same time (which would mix data from two seed runs).
+async function withLock(key, fn) {
+  for (let attempt = 0; attempt < 120; attempt += 1) {
+    try {
+      await meta().insertOne({ _id: key, lockedAt: new Date() });
+    } catch (err) {
+      if (err.code !== 11000) throw err;
+      // Someone else holds the lock: clear it if stale, otherwise wait.
+      await meta().deleteOne({ _id: key, lockedAt: { $lt: new Date(Date.now() - 60000) } });
+      await sleep(250);
+      continue;
+    }
+    try {
+      return await fn();
+    } finally {
+      await meta().deleteOne({ _id: key });
+    }
+  }
+  throw new Error('Timed out waiting for the demo data lock');
+}
+
+const isCurrent = async () => (await meta().findOne({ _id: 'seed' }))?.version === SEED_VERSION;
 
 // Seeds demo data on an empty database, or refreshes it when the dataset version changes.
 export async function ensureSeed() {
   if (seeding) return seeding;
   seeding = (async () => {
-    const current = await meta().findOne({ _id: 'seed' });
-    if (current?.version === SEED_VERSION) return;
-    await resetDemo();
+    if (await isCurrent()) return;
+    await withLock('seed-lock', async () => {
+      if (!(await isCurrent())) await wipeAndSeed();
+    });
   })().catch((err) => {
     seeding = null;
     throw err;
@@ -32,8 +58,13 @@ export async function ensureSeed() {
   return seeding;
 }
 
-// Wipes every collection and restores the demo dataset (used by the daily cron).
+// Restores the demo dataset (used by the daily cron).
 export async function resetDemo() {
+  await withLock('seed-lock', wipeAndSeed);
+  seeding = Promise.resolve();
+}
+
+async function wipeAndSeed() {
   const collections = await mongoose.connection.db.collections();
   await Promise.all(
     collections.filter((c) => c.collectionName !== 'meta').map((c) => c.deleteMany({})),
@@ -44,7 +75,6 @@ export async function resetDemo() {
     { $set: { version: SEED_VERSION, seededAt: new Date() } },
     { upsert: true },
   );
-  seeding = Promise.resolve();
 }
 
 export async function seedAll() {
