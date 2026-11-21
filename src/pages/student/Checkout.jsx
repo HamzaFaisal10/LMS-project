@@ -59,6 +59,7 @@ export default function Checkout() {
     try {
       const r = await api('/checkout', { method: 'POST', body: { courseId: course._id, card } });
       setPaid(r.payment);
+      window.scrollTo({ top: 0 });
       toast.success('Payment successful!');
     } catch (err) {
       toast.error(err.message);

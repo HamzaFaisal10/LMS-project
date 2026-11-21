@@ -10,7 +10,7 @@ export default function Logo({ light }) {
       <span
         className={`font-display text-xl font-extrabold tracking-tight ${light ? 'text-white' : 'text-slate-900'}`}
       >
-        Learn<span className="text-brand-600">Hub</span>
+        Learn<span className={light ? 'text-brand-200' : 'text-brand-600'}>Hub</span>
       </span>
     </Link>
   );

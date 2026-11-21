@@ -11,14 +11,20 @@ import { DEMO_ACCOUNTS, DEMO_PASSWORD } from './demoAccounts.js';
 import { CATEGORIES, COURSES, EXTRA_INSTRUCTORS, QUIZZES, STUDENT_NAMES } from './data.js';
 import { slugify } from '../utils/slugify.js';
 
+// Bump this whenever the demo dataset changes: existing databases are re-seeded automatically.
+export const SEED_VERSION = 2;
+
 let seeding = null;
 
-// Seeds demo data the first time the API runs against an empty database.
+const meta = () => mongoose.connection.db.collection('meta');
+
+// Seeds demo data on an empty database, or refreshes it when the dataset version changes.
 export async function ensureSeed() {
   if (seeding) return seeding;
   seeding = (async () => {
-    const exists = await User.exists({ email: DEMO_ACCOUNTS.admin.email });
-    if (!exists) await seedAll();
+    const current = await meta().findOne({ _id: 'seed' });
+    if (current?.version === SEED_VERSION) return;
+    await resetDemo();
   })().catch((err) => {
     seeding = null;
     throw err;
@@ -29,8 +35,15 @@ export async function ensureSeed() {
 // Wipes every collection and restores the demo dataset (used by the daily cron).
 export async function resetDemo() {
   const collections = await mongoose.connection.db.collections();
-  await Promise.all(collections.map((c) => c.deleteMany({})));
+  await Promise.all(
+    collections.filter((c) => c.collectionName !== 'meta').map((c) => c.deleteMany({})),
+  );
   await seedAll();
+  await meta().updateOne(
+    { _id: 'seed' },
+    { $set: { version: SEED_VERSION, seededAt: new Date() } },
+    { upsert: true },
+  );
   seeding = Promise.resolve();
 }
 

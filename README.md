@@ -2,7 +2,7 @@
 
 A full-featured, production-style **Learning Management System** built with the **MERN stack** (MongoDB, Express, React, Node.js). Students buy and take courses, instructors build and sell them, and admins moderate the whole platform.
 
-**🔗 Live demo:** _coming soon_
+**🔗 Live demo:** https://learnhub-lms-azure.vercel.app
 
 > **Try it in one click:** the login page has **Student**, **Instructor** and **Admin** demo buttons.
 > Payments run in **demo mode**. Use test card `4242 4242 4242 4242`, any future expiry and any CVC. No real money is ever charged.

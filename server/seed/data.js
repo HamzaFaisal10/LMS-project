@@ -1,14 +1,17 @@
 // Demo catalog used to seed a fresh database.
-const V = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/';
-const CLIPS = [
-  'ForBiggerBlazes',
-  'ForBiggerEscapes',
-  'ForBiggerFun',
-  'ForBiggerJoyrides',
-  'ForBiggerMeltdowns',
-].map((n) => `${V}${n}.mp4`);
-let clip = 0;
-const video = () => CLIPS[clip++ % CLIPS.length];
+// Real, embeddable YouTube lessons (freeCodeCamp, Traversy Media, Ahrefs, etc.) per course.
+const yt = (id) => `https://www.youtube.com/watch?v=${id}`;
+const VIDEOS = {
+  mern: ['7CqJlxBYj-M', 'Oe421EPjeBE', 'bMknfKXIFA8', 'hdI2bqOjy3c'],
+  js: ['PkZNo7MFNFg', 'hdI2bqOjy3c'],
+  react: ['ft30zcMlFao', 'w7ejDZ8SWv8', 'bMknfKXIFA8'],
+  python: ['r-uOLxNrNk8', 'rfscVS0vtbw'],
+  ml: ['i_LwzRVP7bg', 'ukzFI9rgwfU'],
+  design: ['FTFaQWZBqQ8'],
+  marketing: ['bixR-KIJKYM', 'MYE6T_gd7H0', 'DvwS7cV9GmQ', 'xsVTqzratPs'],
+  freelance: ['XG_-wR7AjLY', 'L9J2bPW0LKQ'],
+  devops: ['fqMOX6JJhGo', 'X48VuDVv0do'],
+};
 
 export const CATEGORIES = [
   { name: 'Web Development', slug: 'web-development', icon: 'Code2' },
@@ -44,12 +47,18 @@ export const EXTRA_INSTRUCTORS = [
 ];
 
 // Lessons: [title, minutes, isPreview?]
-const lessons = (rows) =>
+const used = {};
+const nextVideo = (topic) => {
+  used[topic] = (used[topic] ?? -1) + 1;
+  return yt(VIDEOS[topic][used[topic] % VIDEOS[topic].length]);
+};
+
+const lessons = (rows, topic) =>
   rows.map(([title, duration, isPreview = false]) => ({
     title,
     duration,
     isPreview,
-    videoUrl: video(),
+    videoUrl: nextVideo(topic),
     description: `In this lesson we cover ${title.toLowerCase()} with practical, real-world examples.`,
   }));
 
@@ -74,34 +83,46 @@ export const COURSES = [
     sections: [
       {
         title: 'Getting Started',
-        lessons: lessons([
-          ['Welcome to the bootcamp', 4, true],
-          ['How the MERN stack fits together', 9, true],
-          ['Setting up your environment', 12],
-        ]),
+        lessons: lessons(
+          [
+            ['Welcome to the bootcamp', 4, true],
+            ['How the MERN stack fits together', 9, true],
+            ['Setting up your environment', 12],
+          ],
+          'mern',
+        ),
       },
       {
         title: 'Backend with Node & Express',
-        lessons: lessons([
-          ['Your first Express server', 14],
-          ['Routing and middleware', 18],
-          ['Connecting MongoDB with Mongoose', 21],
-        ]),
+        lessons: lessons(
+          [
+            ['Your first Express server', 14],
+            ['Routing and middleware', 18],
+            ['Connecting MongoDB with Mongoose', 21],
+          ],
+          'mern',
+        ),
       },
       {
         title: 'Frontend with React',
-        lessons: lessons([
-          ['Components, props and state', 16],
-          ['Fetching data from your API', 19],
-          ['React Router and protected pages', 15],
-        ]),
+        lessons: lessons(
+          [
+            ['Components, props and state', 16],
+            ['Fetching data from your API', 19],
+            ['React Router and protected pages', 15],
+          ],
+          'mern',
+        ),
       },
       {
         title: 'Authentication & Deployment',
-        lessons: lessons([
-          ['JWT authentication end to end', 24],
-          ['Deploying to the cloud', 13],
-        ]),
+        lessons: lessons(
+          [
+            ['JWT authentication end to end', 24],
+            ['Deploying to the cloud', 13],
+          ],
+          'mern',
+        ),
       },
     ],
   },
@@ -124,24 +145,33 @@ export const COURSES = [
     sections: [
       {
         title: 'Language Fundamentals',
-        lessons: lessons([
-          ['Variables, scope and hoisting', 10, true],
-          ['Arrow functions and this', 12],
-        ]),
+        lessons: lessons(
+          [
+            ['Variables, scope and hoisting', 10, true],
+            ['Arrow functions and this', 12],
+          ],
+          'js',
+        ),
       },
       {
         title: 'Working with Data',
-        lessons: lessons([
-          ['Destructuring and spread', 9],
-          ['Array methods you will use daily', 15],
-        ]),
+        lessons: lessons(
+          [
+            ['Destructuring and spread', 9],
+            ['Array methods you will use daily', 15],
+          ],
+          'js',
+        ),
       },
       {
         title: 'Asynchronous JavaScript',
-        lessons: lessons([
-          ['Promises explained', 14],
-          ['async / await in practice', 13],
-        ]),
+        lessons: lessons(
+          [
+            ['Promises explained', 14],
+            ['async / await in practice', 13],
+          ],
+          'js',
+        ),
       },
     ],
   },
@@ -164,24 +194,33 @@ export const COURSES = [
     sections: [
       {
         title: 'Tailwind Essentials',
-        lessons: lessons([
-          ['Utility-first CSS mindset', 8, true],
-          ['Responsive design with breakpoints', 11],
-        ]),
+        lessons: lessons(
+          [
+            ['Utility-first CSS mindset', 8, true],
+            ['Responsive design with breakpoints', 11],
+          ],
+          'react',
+        ),
       },
       {
         title: 'Component Patterns',
-        lessons: lessons([
-          ['Building a design system', 17],
-          ['Forms, modals and toasts', 16],
-        ]),
+        lessons: lessons(
+          [
+            ['Building a design system', 17],
+            ['Forms, modals and toasts', 16],
+          ],
+          'react',
+        ),
       },
       {
         title: 'Project: Admin Dashboard',
-        lessons: lessons([
-          ['Layout and navigation', 18],
-          ['Charts and data tables', 20],
-        ]),
+        lessons: lessons(
+          [
+            ['Layout and navigation', 18],
+            ['Charts and data tables', 20],
+          ],
+          'react',
+        ),
       },
     ],
   },
@@ -204,25 +243,34 @@ export const COURSES = [
     sections: [
       {
         title: 'Python Basics',
-        lessons: lessons([
-          ['Why Python for data?', 6, true],
-          ['Variables, lists and dictionaries', 14],
-        ]),
+        lessons: lessons(
+          [
+            ['Why Python for data?', 6, true],
+            ['Variables, lists and dictionaries', 14],
+          ],
+          'python',
+        ),
       },
       {
         title: 'Pandas in Depth',
-        lessons: lessons([
-          ['DataFrames 101', 16],
-          ['Cleaning messy data', 19],
-          ['Grouping and aggregation', 17],
-        ]),
+        lessons: lessons(
+          [
+            ['DataFrames 101', 16],
+            ['Cleaning messy data', 19],
+            ['Grouping and aggregation', 17],
+          ],
+          'python',
+        ),
       },
       {
         title: 'Visualization',
-        lessons: lessons([
-          ['Charts with Matplotlib', 13],
-          ['Telling stories with data', 11],
-        ]),
+        lessons: lessons(
+          [
+            ['Charts with Matplotlib', 13],
+            ['Telling stories with data', 11],
+          ],
+          'python',
+        ),
       },
     ],
   },
@@ -245,25 +293,34 @@ export const COURSES = [
     sections: [
       {
         title: 'Foundations',
-        lessons: lessons([
-          ['What is machine learning?', 9, true],
-          ['Training vs. test data', 11],
-        ]),
+        lessons: lessons(
+          [
+            ['What is machine learning?', 9, true],
+            ['Training vs. test data', 11],
+          ],
+          'ml',
+        ),
       },
       {
         title: 'Supervised Learning',
-        lessons: lessons([
-          ['Linear regression', 18],
-          ['Classification with logistic regression', 17],
-          ['Decision trees and random forests', 20],
-        ]),
+        lessons: lessons(
+          [
+            ['Linear regression', 18],
+            ['Classification with logistic regression', 17],
+            ['Decision trees and random forests', 20],
+          ],
+          'ml',
+        ),
       },
       {
         title: 'Deep Learning',
-        lessons: lessons([
-          ['Neural networks intuition', 15],
-          ['Building your first network', 22],
-        ]),
+        lessons: lessons(
+          [
+            ['Neural networks intuition', 15],
+            ['Building your first network', 22],
+          ],
+          'ml',
+        ),
       },
     ],
   },
@@ -286,24 +343,33 @@ export const COURSES = [
     sections: [
       {
         title: 'UX Foundations',
-        lessons: lessons([
-          ['What great UX looks like', 7, true],
-          ['User research and personas', 15],
-        ]),
+        lessons: lessons(
+          [
+            ['What great UX looks like', 7, true],
+            ['User research and personas', 15],
+          ],
+          'design',
+        ),
       },
       {
         title: 'Designing in Figma',
-        lessons: lessons([
-          ['Frames, auto layout and components', 18],
-          ['Typography and color systems', 14],
-        ]),
+        lessons: lessons(
+          [
+            ['Frames, auto layout and components', 18],
+            ['Typography and color systems', 14],
+          ],
+          'design',
+        ),
       },
       {
         title: 'Prototyping',
-        lessons: lessons([
-          ['Interactive prototypes', 13],
-          ['Usability testing', 12],
-        ]),
+        lessons: lessons(
+          [
+            ['Interactive prototypes', 13],
+            ['Usability testing', 12],
+          ],
+          'design',
+        ),
       },
     ],
   },
@@ -326,18 +392,24 @@ export const COURSES = [
     sections: [
       {
         title: 'Strategy',
-        lessons: lessons([
-          ['The modern marketing funnel', 9, true],
-          ['Finding your ideal customer', 11],
-        ]),
+        lessons: lessons(
+          [
+            ['The modern marketing funnel', 9, true],
+            ['Finding your ideal customer', 11],
+          ],
+          'marketing',
+        ),
       },
       {
         title: 'Channels',
-        lessons: lessons([
-          ['SEO that actually works', 17],
-          ['Email marketing automation', 14],
-          ['Paid ads on a budget', 16],
-        ]),
+        lessons: lessons(
+          [
+            ['SEO that actually works', 17],
+            ['Email marketing automation', 14],
+            ['Paid ads on a budget', 16],
+          ],
+          'marketing',
+        ),
       },
     ],
   },
@@ -360,17 +432,23 @@ export const COURSES = [
     sections: [
       {
         title: 'Getting Started',
-        lessons: lessons([
-          ['Choosing your niche', 8, true],
-          ['Building a portfolio that sells', 12],
-        ]),
+        lessons: lessons(
+          [
+            ['Choosing your niche', 8, true],
+            ['Building a portfolio that sells', 12],
+          ],
+          'freelance',
+        ),
       },
       {
         title: 'Winning Clients',
-        lessons: lessons([
-          ['Writing winning proposals', 15],
-          ['Pricing and negotiation', 13],
-        ]),
+        lessons: lessons(
+          [
+            ['Writing winning proposals', 15],
+            ['Pricing and negotiation', 13],
+          ],
+          'freelance',
+        ),
       },
     ],
   },
@@ -394,17 +472,23 @@ export const COURSES = [
     sections: [
       {
         title: 'Docker Fundamentals',
-        lessons: lessons([
-          ['Containers vs virtual machines', 9, true],
-          ['Writing your first Dockerfile', 15],
-        ]),
+        lessons: lessons(
+          [
+            ['Containers vs virtual machines', 9, true],
+            ['Writing your first Dockerfile', 15],
+          ],
+          'devops',
+        ),
       },
       {
         title: 'Kubernetes',
-        lessons: lessons([
-          ['Pods, deployments and services', 18],
-          ['Scaling and rolling updates', 16],
-        ]),
+        lessons: lessons(
+          [
+            ['Pods, deployments and services', 18],
+            ['Scaling and rolling updates', 16],
+          ],
+          'devops',
+        ),
       },
     ],
   },
