@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { NavLink, Outlet, Link } from 'react-router-dom';
 import { ExternalLink, Menu } from 'lucide-react';
 import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
+import { PageLoader } from '../components/ui';
 
 // Sidebar layout shared by the instructor and admin areas.
 export default function DashboardLayout({ title, items }) {
@@ -59,7 +60,9 @@ export default function DashboardLayout({ title, items }) {
           <Menu className="h-4 w-4" /> {title} menu
         </button>
         <main className="p-4 sm:p-8">
-          <Outlet />
+          <Suspense fallback={<PageLoader />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </div>
