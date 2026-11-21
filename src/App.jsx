@@ -17,7 +17,12 @@ import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import InstructorCourses from './pages/instructor/InstructorCourses';
 import CourseEditor from './pages/instructor/CourseEditor';
 import InstructorStudents from './pages/instructor/InstructorStudents';
-import { BookOpen, LayoutDashboard, Users } from 'lucide-react';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminCourses from './pages/admin/AdminCourses';
+import AdminPayments from './pages/admin/AdminPayments';
+import AdminCategories from './pages/admin/AdminCategories';
+import { BookOpen, CreditCard, LayoutDashboard, Tags, Users } from 'lucide-react';
 
 const INSTRUCTOR_NAV = [
   { to: '/instructor', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -59,6 +64,20 @@ export default function App() {
           <Route path="courses" element={<InstructorCourses />} />
           <Route path="courses/:id" element={<CourseEditor />} />
           <Route path="students" element={<InstructorStudents />} />
+        </Route>
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute roles={['admin']}>
+              <DashboardLayout title="Admin" items={ADMIN_NAV} />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="courses" element={<AdminCourses />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="payments" element={<AdminPayments />} />
+          <Route path="categories" element={<AdminCategories />} />
         </Route>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
