@@ -96,7 +96,8 @@ export async function seedAll() {
   for (const student of students) {
     const picks = [...courses].sort(() => rand() - 0.5).slice(0, 1 + Math.floor(rand() * 4));
     for (const course of picks) {
-      const createdAt = new Date(now - Math.floor(rand() * 175 + 1) * 86400000);
+      // Skewed towards recent months so the revenue trend shows healthy growth.
+      const createdAt = new Date(now - Math.floor((1 - rand() ** 0.75) * 175 + 1) * 86400000);
       enrollments.push(buildEnrollment(student, course, Math.floor(rand() * 101), createdAt));
     }
   }

@@ -12,6 +12,18 @@ import MyLearning from './pages/student/MyLearning';
 import Learn from './pages/student/Learn';
 import Checkout from './pages/student/Checkout';
 import Purchases from './pages/student/Purchases';
+import DashboardLayout from './layouts/DashboardLayout';
+import InstructorDashboard from './pages/instructor/InstructorDashboard';
+import InstructorCourses from './pages/instructor/InstructorCourses';
+import CourseEditor from './pages/instructor/CourseEditor';
+import InstructorStudents from './pages/instructor/InstructorStudents';
+import { BookOpen, LayoutDashboard, Users } from 'lucide-react';
+
+const INSTRUCTOR_NAV = [
+  { to: '/instructor', label: 'Dashboard', icon: LayoutDashboard, end: true },
+  { to: '/instructor/courses', label: 'My courses', icon: BookOpen },
+  { to: '/instructor/students', label: 'Students', icon: Users },
+];
 
 function ComingSoon() {
   return (
@@ -35,6 +47,19 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/instructor"
+          element={
+            <ProtectedRoute roles={['instructor', 'admin']}>
+              <DashboardLayout title="Instructor" items={INSTRUCTOR_NAV} />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<InstructorDashboard />} />
+          <Route path="courses" element={<InstructorCourses />} />
+          <Route path="courses/:id" element={<CourseEditor />} />
+          <Route path="students" element={<InstructorStudents />} />
+        </Route>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
