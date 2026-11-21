@@ -374,6 +374,40 @@ export const COURSES = [
       },
     ],
   },
+  {
+    instructor: 'david',
+    category: 'web-development',
+    status: 'pending',
+    title: 'Docker & Kubernetes for Developers',
+    subtitle: 'Containerize, ship and scale your applications with confidence',
+    level: 'Intermediate',
+    price: 54.99,
+    theme: 2,
+    rating: 0,
+    ratingCount: 0,
+    outcomes: [
+      'Containerize any app with Docker',
+      'Orchestrate services with Kubernetes',
+      'Set up CI/CD pipelines',
+    ],
+    requirements: ['Comfortable with the command line'],
+    sections: [
+      {
+        title: 'Docker Fundamentals',
+        lessons: lessons([
+          ['Containers vs virtual machines', 9, true],
+          ['Writing your first Dockerfile', 15],
+        ]),
+      },
+      {
+        title: 'Kubernetes',
+        lessons: lessons([
+          ['Pods, deployments and services', 18],
+          ['Scaling and rolling updates', 16],
+        ]),
+      },
+    ],
+  },
 ];
 
 // Quiz per course (questions: [question, options, correctIndex, explanation])
