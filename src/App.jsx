@@ -5,6 +5,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Profile from './pages/Profile';
+import Home from './pages/Home';
+import Courses from './pages/courses/Courses';
+import CourseDetail from './pages/courses/CourseDetail';
 
 function ComingSoon() {
   return (
@@ -21,7 +24,9 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<MainLayout />}>
-          <Route path="/" element={<ComingSoon />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/:slug" element={<CourseDetail />} />
           <Route
             path="/profile"
             element={
