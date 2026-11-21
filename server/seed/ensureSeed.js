@@ -60,23 +60,27 @@ export async function seedAll() {
       instructor: users[c.instructor]._id,
       category: catBySlug[c.category],
       description: `${c.subtitle}. This course is packed with practical lessons, real-world projects and quizzes so you can apply everything you learn. By the end you will have the confidence and portfolio to take the next step in your career.`,
-      status: 'published',
-      publishedAt: new Date(now - (i + 1) * 20 * 86400000),
+      status: c.status || 'published',
+      publishedAt: c.status ? undefined : new Date(now - (i + 1) * 20 * 86400000),
     })),
   );
 
   await Quiz.insertMany(
-    courses.map((c) => ({
-      course: c._id,
-      title: `${c.title.split(':')[0]} — Final Quiz`,
-      passingScore: 70,
-      questions: (QUIZZES[c.title] || []).map(([question, options, correctIndex, explanation]) => ({
-        question,
-        options,
-        correctIndex,
-        explanation,
+    courses
+      .filter((c) => QUIZZES[c.title])
+      .map((c) => ({
+        course: c._id,
+        title: `${c.title.split(':')[0]} — Final Quiz`,
+        passingScore: 70,
+        questions: (QUIZZES[c.title] || []).map(
+          ([question, options, correctIndex, explanation]) => ({
+            question,
+            options,
+            correctIndex,
+            explanation,
+          }),
+        ),
       })),
-    })),
   );
 
   // Simulated learners with realistic enrollment history over the last 6 months.
@@ -94,7 +98,9 @@ export async function seedAll() {
   const rand = mulberry32(42);
   const enrollments = [];
   for (const student of students) {
-    const picks = [...courses].sort(() => rand() - 0.5).slice(0, 1 + Math.floor(rand() * 4));
+    const picks = [...courses.filter((c) => c.status === 'published')]
+      .sort(() => rand() - 0.5)
+      .slice(0, 1 + Math.floor(rand() * 4));
     for (const course of picks) {
       // Skewed towards recent months so the revenue trend shows healthy growth.
       const createdAt = new Date(now - Math.floor((1 - rand() ** 0.75) * 175 + 1) * 86400000);
