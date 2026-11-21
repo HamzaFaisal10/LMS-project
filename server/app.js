@@ -5,6 +5,8 @@ import rateLimit from 'express-rate-limit';
 import mongoose from 'mongoose';
 import { connectDB } from './config/db.js';
 import { notFound, errorHandler } from './middleware/error.js';
+import { ensureSeed } from './seed/ensureSeed.js';
+import authRoutes from './routes/auth.routes.js';
 
 const app = express();
 
@@ -21,6 +23,7 @@ app.use(
 app.use('/api', async (_req, _res, next) => {
   try {
     await connectDB();
+    await ensureSeed();
     next();
   } catch (err) {
     next(err);
@@ -34,6 +37,8 @@ app.get('/api/health', (_req, res) => {
     time: new Date().toISOString(),
   });
 });
+
+app.use('/api/auth', authRoutes);
 
 app.use('/api', notFound);
 app.use(errorHandler);
