@@ -3,6 +3,7 @@ import Course from '../models/Course.js';
 import Category from '../models/Category.js';
 import { optionalAuth } from '../middleware/auth.js';
 import { ApiError, asyncHandler } from '../utils/asyncHandler.js';
+import { courseAccess } from '../utils/access.js';
 
 const router = Router();
 
@@ -79,27 +80,21 @@ router.get(
       })),
     }));
     data.instructorStats = await instructorStats(course.instructor._id);
+    const { enrollment } = await courseAccess(req.user, course);
+    data.isEnrolled = Boolean(enrollment);
     res.json(data);
   }),
 );
 
 async function instructorStats(instructorId) {
-  const [agg] = await Course.aggregate([
-    { $match: { instructor: instructorId, status: 'published' } },
-    {
-      $group: {
-        _id: null,
-        courses: { $sum: 1 },
-        students: { $sum: '$studentsCount' },
-        rating: { $avg: '$rating' },
-      },
-    },
-  ]);
-  return {
-    courses: agg?.courses || 0,
-    students: agg?.students || 0,
-    rating: agg ? Number(agg.rating.toFixed(1)) : 0,
-  };
+  const courses = await Course.find({ instructor: instructorId, status: 'published' })
+    .select('studentsCount rating')
+    .lean();
+  const students = courses.reduce((n, c) => n + (c.studentsCount || 0), 0);
+  const rating = courses.length
+    ? courses.reduce((n, c) => n + (c.rating || 0), 0) / courses.length
+    : 0;
+  return { courses: courses.length, students, rating: Number(rating.toFixed(1)) };
 }
 
 export default router;

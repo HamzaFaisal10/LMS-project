@@ -2,8 +2,12 @@ import mongoose from 'mongoose';
 import User from '../models/User.js';
 import Category from '../models/Category.js';
 import Course from '../models/Course.js';
+import Quiz from '../models/Quiz.js';
+import Enrollment from '../models/Enrollment.js';
+import QuizAttempt from '../models/QuizAttempt.js';
+import bcrypt from 'bcryptjs';
 import { DEMO_ACCOUNTS, DEMO_PASSWORD } from './demoAccounts.js';
-import { CATEGORIES, COURSES, EXTRA_INSTRUCTORS } from './data.js';
+import { CATEGORIES, COURSES, EXTRA_INSTRUCTORS, QUIZZES, STUDENT_NAMES } from './data.js';
 import { slugify } from '../utils/slugify.js';
 
 let seeding = null;
@@ -30,7 +34,6 @@ export async function resetDemo() {
 }
 
 export async function seedAll() {
-  // Shared password hash keeps seeding fast on serverless.
   const users = {};
   for (const [key, account] of Object.entries(DEMO_ACCOUNTS)) {
     users[key] = await User.create({ ...account, password: DEMO_PASSWORD, isDemo: true });
@@ -61,5 +64,106 @@ export async function seedAll() {
     })),
   );
 
-  return { users, categories, courses };
+  await Quiz.insertMany(
+    courses.map((c) => ({
+      course: c._id,
+      title: `${c.title.split(':')[0]} — Final Quiz`,
+      passingScore: 70,
+      questions: (QUIZZES[c.title] || []).map(([question, options, correctIndex, explanation]) => ({
+        question,
+        options,
+        correctIndex,
+        explanation,
+      })),
+    })),
+  );
+
+  // Simulated learners with realistic enrollment history over the last 6 months.
+  const hash = await bcrypt.hash(DEMO_PASSWORD, 10);
+  const students = await User.insertMany(
+    STUDENT_NAMES.map((name, i) => ({
+      name,
+      email: `${name.toLowerCase().replace(/\s+/g, '.')}@example.com`,
+      password: hash,
+      role: 'student',
+      isDemo: true,
+      createdAt: new Date(now - (180 - i * 5) * 86400000),
+    })),
+  );
+  const rand = mulberry32(42);
+  const enrollments = [];
+  for (const student of students) {
+    const picks = [...courses].sort(() => rand() - 0.5).slice(0, 1 + Math.floor(rand() * 4));
+    for (const course of picks) {
+      const createdAt = new Date(now - Math.floor(rand() * 175 + 1) * 86400000);
+      enrollments.push(buildEnrollment(student, course, Math.floor(rand() * 101), createdAt));
+    }
+  }
+
+  // The demo student's own learning, so the dashboard feels lived-in.
+  const bySlug = Object.fromEntries(courses.map((c) => [c.slug, c]));
+  const mine = [
+    ['the-complete-mern-stack-bootcamp', 45, 6],
+    ['modern-javascript-es6-to-es2024', 100, 30],
+    ['uiux-design-masterclass-with-figma', 0, 2],
+  ];
+  for (const [slug, pct, daysAgo] of mine) {
+    if (bySlug[slug])
+      enrollments.push(
+        buildEnrollment(users.student, bySlug[slug], pct, new Date(now - daysAgo * 86400000)),
+      );
+  }
+  await Enrollment.insertMany(enrollments);
+
+  const quizByCourse = Object.fromEntries(
+    (await Quiz.find().lean()).map((q) => [String(q.course), q]),
+  );
+  const jsQuiz = quizByCourse[String(bySlug['modern-javascript-es6-to-es2024']?._id)];
+  if (jsQuiz) {
+    await QuizAttempt.create({
+      user: users.student._id,
+      quiz: jsQuiz._id,
+      course: jsQuiz.course,
+      answers: jsQuiz.questions.map((q) => q.correctIndex),
+      score: 100,
+      passed: true,
+    });
+  }
+
+  // Course counters: real enrollments on top of the course's historical audience.
+  for (const course of courses) {
+    const count = enrollments.filter((e) => String(e.course) === String(course._id)).length;
+    await Course.updateOne({ _id: course._id }, { studentsCount: course.ratingCount * 3 + count });
+  }
+
+  return { users, categories, courses, students, enrollments };
+}
+
+function buildEnrollment(user, course, pct, createdAt) {
+  const lessonIds = course.sections.flatMap((s) => s.lessons.map((l) => l._id));
+  const done = lessonIds.slice(0, Math.round((lessonIds.length * pct) / 100));
+  const progress = lessonIds.length ? Math.round((done.length / lessonIds.length) * 100) : 0;
+  return {
+    user: user._id,
+    course: course._id,
+    completedLessons: done,
+    progress,
+    lastLesson: done[done.length - 1] || lessonIds[0],
+    completedAt: progress === 100 ? createdAt : undefined,
+    pricePaid: course.price,
+    createdAt,
+    updatedAt: createdAt,
+  };
+}
+
+// Small deterministic PRNG so every reset produces the same demo data.
+function mulberry32(seed) {
+  let a = seed;
+  return () => {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
 }

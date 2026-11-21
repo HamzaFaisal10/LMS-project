@@ -9,6 +9,10 @@ import { ensureSeed } from './seed/ensureSeed.js';
 import authRoutes from './routes/auth.routes.js';
 import categoryRoutes from './routes/category.routes.js';
 import courseRoutes from './routes/course.routes.js';
+import enrollmentRoutes from './routes/enrollment.routes.js';
+import learnRoutes from './routes/learn.routes.js';
+import quizRoutes from './routes/quiz.routes.js';
+import fileRoutes from './routes/file.routes.js';
 
 const app = express();
 
@@ -43,6 +47,10 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/enrollments', enrollmentRoutes);
+app.use('/api/learn', learnRoutes);
+app.use('/api/quizzes', quizRoutes);
+app.use('/api/files', fileRoutes);
 
 app.use('/api', notFound);
 app.use(errorHandler);
