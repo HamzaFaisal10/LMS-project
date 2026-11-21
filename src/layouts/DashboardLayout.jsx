@@ -54,7 +54,7 @@ export default function DashboardLayout({ title, items }) {
       )}
       <div className="lg:pl-64">
         <div className="hidden lg:block">
-          <Navbar />
+          <Navbar compact />
         </div>
         <button onClick={() => setOpen(true)} className="btn-secondary m-4 lg:hidden">
           <Menu className="h-4 w-4" /> {title} menu

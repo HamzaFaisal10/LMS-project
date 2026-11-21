@@ -107,7 +107,7 @@ export default function Home() {
                 <p className="mt-2 text-xs text-slate-500">8 of 12 lessons complete</p>
               </div>
             </div>
-            <div className="card absolute -bottom-6 -left-8 flex items-center gap-3 px-4 py-3">
+            <div className="card absolute -bottom-12 -left-8 flex items-center gap-3 px-4 py-3">
               <div className="rounded-lg bg-emerald-50 p-2 text-emerald-600">
                 <Award className="h-5 w-5" />
               </div>
@@ -152,7 +152,9 @@ export default function Home() {
                   <Icon className="h-5 w-5" />
                 </div>
                 <p className="font-semibold leading-snug">{c.name}</p>
-                <p className="text-xs text-slate-500">{c.courseCount} courses</p>
+                <p className="text-xs text-slate-500">
+                  {c.courseCount} {c.courseCount === 1 ? 'course' : 'courses'}
+                </p>
               </Link>
             );
           })}
