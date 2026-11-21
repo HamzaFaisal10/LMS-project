@@ -5,6 +5,7 @@ import Course from '../models/Course.js';
 import Quiz from '../models/Quiz.js';
 import Enrollment from '../models/Enrollment.js';
 import QuizAttempt from '../models/QuizAttempt.js';
+import Payment from '../models/Payment.js';
 import bcrypt from 'bcryptjs';
 import { DEMO_ACCOUNTS, DEMO_PASSWORD } from './demoAccounts.js';
 import { CATEGORIES, COURSES, EXTRA_INSTRUCTORS, QUIZZES, STUDENT_NAMES } from './data.js';
@@ -114,6 +115,25 @@ export async function seedAll() {
       );
   }
   await Enrollment.insertMany(enrollments);
+
+  // Matching demo payments for every paid enrollment (powers revenue charts).
+  const courseById = Object.fromEntries(courses.map((c) => [String(c._id), c]));
+  await Payment.insertMany(
+    enrollments
+      .filter((e) => e.pricePaid > 0)
+      .map((e, i) => ({
+        user: e.user,
+        course: e.course,
+        instructor: courseById[String(e.course)].instructor,
+        amount: e.pricePaid,
+        status: 'paid',
+        transactionId: `demo_seed_${String(i).padStart(5, '0')}`,
+        cardBrand: i % 3 === 0 ? 'Mastercard' : 'Visa',
+        cardLast4: i % 3 === 0 ? '4444' : '4242',
+        createdAt: e.createdAt,
+        updatedAt: e.createdAt,
+      })),
+  );
 
   const quizByCourse = Object.fromEntries(
     (await Quiz.find().lean()).map((q) => [String(q.course), q]),

@@ -10,6 +10,8 @@ import Courses from './pages/courses/Courses';
 import CourseDetail from './pages/courses/CourseDetail';
 import MyLearning from './pages/student/MyLearning';
 import Learn from './pages/student/Learn';
+import Checkout from './pages/student/Checkout';
+import Purchases from './pages/student/Purchases';
 
 function ComingSoon() {
   return (
