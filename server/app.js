@@ -7,6 +7,8 @@ import { connectDB } from './config/db.js';
 import { notFound, errorHandler } from './middleware/error.js';
 import { ensureSeed } from './seed/ensureSeed.js';
 import authRoutes from './routes/auth.routes.js';
+import categoryRoutes from './routes/category.routes.js';
+import courseRoutes from './routes/course.routes.js';
 
 const app = express();
 
@@ -39,6 +41,8 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/courses', courseRoutes);
 
 app.use('/api', notFound);
 app.use(errorHandler);
