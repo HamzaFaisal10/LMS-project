@@ -13,6 +13,7 @@ import enrollmentRoutes from './routes/enrollment.routes.js';
 import learnRoutes from './routes/learn.routes.js';
 import quizRoutes from './routes/quiz.routes.js';
 import fileRoutes from './routes/file.routes.js';
+import checkoutRoutes from './routes/checkout.routes.js';
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/learn', learnRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/files', fileRoutes);
+app.use('/api/checkout', checkoutRoutes);
 
 app.use('/api', notFound);
 app.use(errorHandler);
