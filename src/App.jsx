@@ -8,6 +8,8 @@ import Profile from './pages/Profile';
 import Home from './pages/Home';
 import Courses from './pages/courses/Courses';
 import CourseDetail from './pages/courses/CourseDetail';
+import MyLearning from './pages/student/MyLearning';
+import Learn from './pages/student/Learn';
 
 function ComingSoon() {
   return (
@@ -23,6 +25,14 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/learn/:courseId"
+          element={
+            <ProtectedRoute>
+              <Learn />
+            </ProtectedRoute>
+          }
+        />
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
