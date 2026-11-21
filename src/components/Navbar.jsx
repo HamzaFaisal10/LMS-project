@@ -5,7 +5,7 @@ import Logo from './Logo';
 import { Avatar } from './ui';
 import { useAuth, homeFor } from '../context/AuthContext';
 
-export default function Navbar() {
+export default function Navbar({ compact }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [q, setQ] = useState('');
@@ -31,7 +31,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 backdrop-blur">
       <div className="container-page flex h-16 items-center gap-6">
-        <Logo />
+        {!compact && <Logo />}
         <nav className="hidden items-center gap-6 md:flex">
           <NavLink to="/courses" className={link}>
             Explore
