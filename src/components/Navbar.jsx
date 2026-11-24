@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { BookOpen, LayoutDashboard, LogOut, Menu, Receipt, Search, User, X } from 'lucide-react';
+import { BookOpen, LayoutDashboard, LogOut, Menu, Receipt, User, X } from 'lucide-react';
 import Logo from './Logo';
 import { Avatar } from './ui';
 import { useAuth, homeFor } from '../context/AuthContext';
@@ -26,36 +26,34 @@ export default function Navbar({ compact }) {
   };
 
   const link = ({ isActive }) =>
-    `text-sm font-medium ${isActive ? 'text-brand-600' : 'text-slate-600 hover:text-slate-900'}`;
+    `text-[15px] font-medium transition ${isActive ? 'text-brand-600' : 'text-ink-soft hover:text-ink'}`;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 backdrop-blur">
-      <div className="container-page flex h-16 items-center gap-6">
+    <header className="sticky top-0 z-40 border-b border-[#E8EAF1] bg-white/85 backdrop-blur">
+      <div className="container-page flex h-[72px] items-center gap-6">
         {!compact && <Logo />}
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="mx-auto hidden items-center gap-8 lg:flex">
           <NavLink to="/courses" className={link}>
-            Explore
+            Courses
           </NavLink>
+          <a href="/#paths" className={link({})}>
+            Learning paths
+          </a>
+          <a href="/#teams" className={link({})}>
+            For teams
+          </a>
+          <NavLink to="/register?role=instructor" className={link}>
+            Teach
+          </NavLink>
+          <a href="/#pricing" className={link({})}>
+            Pricing
+          </a>
           {user?.role === 'student' && (
             <NavLink to="/my-learning" className={link}>
               My Learning
             </NavLink>
           )}
-          {!user && (
-            <NavLink to="/register?role=instructor" className={link}>
-              Teach on LearnHub
-            </NavLink>
-          )}
         </nav>
-        <form onSubmit={search} className="relative ml-auto hidden max-w-sm flex-1 lg:block">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Search for anything"
-            className="input rounded-full pl-9"
-          />
-        </form>
         <div className="ml-auto flex items-center gap-2 lg:ml-0">
           {user ? (
             <div className="relative" ref={ref}>
@@ -107,13 +105,16 @@ export default function Navbar({ compact }) {
               <Link to="/login" className="btn-ghost">
                 Log in
               </Link>
-              <Link to="/register" className="btn-primary">
-                Sign up
+              <Link
+                to="/register"
+                className="btn rounded-[10px] bg-ink px-[18px] text-[15px] text-white hover:bg-ink-soft"
+              >
+                Get started
               </Link>
             </div>
           )}
           <button
-            className="btn-ghost px-2 md:hidden"
+            className="btn-ghost px-2 lg:hidden"
             onClick={() => setMobile((m) => !m)}
             aria-label="Menu"
           >
@@ -122,7 +123,7 @@ export default function Navbar({ compact }) {
         </div>
       </div>
       {mobile && (
-        <div className="border-t border-slate-100 bg-white md:hidden">
+        <div className="border-t border-slate-100 bg-white lg:hidden">
           <div className="container-page flex flex-col gap-3 py-4">
             <form onSubmit={search}>
               <input
@@ -133,8 +134,24 @@ export default function Navbar({ compact }) {
               />
             </form>
             <Link to="/courses" onClick={() => setMobile(false)} className="py-1 font-medium">
-              Explore courses
+              Courses
             </Link>
+            <a href="/#paths" onClick={() => setMobile(false)} className="py-1 font-medium">
+              Learning paths
+            </a>
+            <a href="/#teams" onClick={() => setMobile(false)} className="py-1 font-medium">
+              For teams
+            </a>
+            <Link
+              to="/register?role=instructor"
+              onClick={() => setMobile(false)}
+              className="py-1 font-medium"
+            >
+              Teach
+            </Link>
+            <a href="/#pricing" onClick={() => setMobile(false)} className="py-1 font-medium">
+              Pricing
+            </a>
             {user ? (
               <Link
                 to={homeFor(user)}
@@ -151,9 +168,9 @@ export default function Navbar({ compact }) {
                 <Link
                   to="/register"
                   onClick={() => setMobile(false)}
-                  className="btn-primary flex-1"
+                  className="btn flex-1 bg-ink text-white hover:bg-ink-soft"
                 >
-                  Sign up
+                  Get started
                 </Link>
               </div>
             )}
