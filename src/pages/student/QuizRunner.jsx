@@ -43,7 +43,7 @@ export default function QuizRunner({ quizId, onBack, onFinished }) {
         <ArrowLeft className="h-4 w-4" /> Back to lessons
       </button>
       <h1 className="mt-2 text-2xl font-extrabold">{quiz.title}</h1>
-      <p className="text-sm text-slate-500">
+      <p className="text-sm text-ink-muted">
         {quiz.questions.length} questions · Pass mark {quiz.passingScore}%
       </p>
 
@@ -84,14 +84,14 @@ export default function QuizRunner({ quizId, onBack, onFinished }) {
                   const chosen = answers[i] === oi;
                   let style = chosen
                     ? 'border-brand-500 bg-brand-50'
-                    : 'border-slate-200 hover:bg-slate-50';
+                    : 'border-line hover:bg-paper';
                   if (r)
                     style =
                       oi === r.correctIndex
                         ? 'border-emerald-500 bg-emerald-50'
                         : chosen
                           ? 'border-rose-400 bg-rose-50'
-                          : 'border-slate-200 opacity-70';
+                          : 'border-line opacity-70';
                   return (
                     <button
                       key={oi}
@@ -111,7 +111,7 @@ export default function QuizRunner({ quizId, onBack, onFinished }) {
                 })}
               </div>
               {r?.explanation && (
-                <p className="mt-3 rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-600">
+                <p className="mt-3 rounded-lg bg-paper px-3 py-2 text-sm text-ink-soft">
                   💡 {r.explanation}
                 </p>
               )}

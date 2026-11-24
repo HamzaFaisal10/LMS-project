@@ -59,12 +59,12 @@ export default function CourseEditor() {
           </Link>
         </div>
       </div>
-      <div className="mt-6 flex gap-1 overflow-x-auto border-b border-slate-200">
+      <div className="mt-6 flex gap-1 overflow-x-auto border-b border-line">
         {TABS.map(([key, label]) => (
           <button
             key={key}
             onClick={() => setParams({ tab: key })}
-            className={`whitespace-nowrap border-b-2 px-4 py-2.5 text-sm font-semibold ${tab === key ? 'border-brand-600 text-brand-700' : 'border-transparent text-slate-500 hover:text-slate-800'}`}
+            className={`whitespace-nowrap border-b-2 px-4 py-2.5 text-sm font-semibold ${tab === key ? 'border-brand-600 text-brand-700' : 'border-transparent text-ink-muted hover:text-ink'}`}
           >
             {label}
           </button>
@@ -406,7 +406,7 @@ function CurriculumTab({ course, onSaved }) {
                 const key = `${si}-${li}`;
                 const isOpen = open === key;
                 return (
-                  <li key={l._id || key} className="rounded-xl border border-slate-200">
+                  <li key={l._id || key} className="rounded-xl border border-line">
                     <div className="flex items-center gap-2 px-3 py-2">
                       <GripVertical className="h-4 w-4 text-slate-300" />
                       <button
@@ -424,7 +424,7 @@ function CurriculumTab({ course, onSaved }) {
                           <span className="badge bg-amber-50 text-amber-700">No video</span>
                         )}
                         {l.resources.length > 0 && (
-                          <span className="badge bg-slate-100 text-slate-600">
+                          <span className="badge bg-slate-100 text-ink-soft">
                             <Paperclip className="h-3 w-3" /> {l.resources.length}
                           </span>
                         )}
@@ -453,7 +453,7 @@ function CurriculumTab({ course, onSaved }) {
                       </button>
                     </div>
                     {isOpen && (
-                      <div className="grid gap-4 border-t border-slate-100 p-4 sm:grid-cols-2">
+                      <div className="grid gap-4 border-t border-line p-4 sm:grid-cols-2">
                         <div className="sm:col-span-2">
                           <label className="label">Lesson title</label>
                           <input
@@ -507,7 +507,7 @@ function CurriculumTab({ course, onSaved }) {
                             {l.resources.map((r, ri) => (
                               <li
                                 key={ri}
-                                className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-sm"
+                                className="flex items-center justify-between rounded-lg bg-paper px-3 py-2 text-sm"
                               >
                                 <span className="flex items-center gap-2">
                                   <FileText className="h-4 w-4 text-brand-600" /> {r.name}
@@ -743,7 +743,7 @@ function PublishTab({ course, quiz, onSaved }) {
           {checks.map(([ok, label]) => (
             <li key={label} className="flex items-center gap-2 text-sm">
               <CheckCircle2 className={`h-5 w-5 ${ok ? 'text-emerald-500' : 'text-slate-300'}`} />{' '}
-              <span className={ok ? '' : 'text-slate-500'}>{label}</span>
+              <span className={ok ? '' : 'text-ink-muted'}>{label}</span>
             </li>
           ))}
         </ul>
@@ -753,18 +753,18 @@ function PublishTab({ course, quiz, onSaved }) {
           Status: <StatusBadge status={course.status} />
         </h2>
         {course.status === 'draft' && (
-          <p className="mt-3 text-sm text-slate-600">
+          <p className="mt-3 text-sm text-ink-soft">
             When you&apos;re ready, submit the course for review. An admin will approve it before it
             appears in the catalog.
           </p>
         )}
         {course.status === 'pending' && (
-          <p className="mt-3 text-sm text-slate-600">
+          <p className="mt-3 text-sm text-ink-soft">
             Your course is waiting for admin review. You can keep editing in the meantime.
           </p>
         )}
         {course.status === 'published' && (
-          <p className="mt-3 text-sm text-slate-600">
+          <p className="mt-3 text-sm text-ink-soft">
             Your course is live in the catalog. 🎉 Edits you save are visible immediately.
           </p>
         )}

@@ -24,7 +24,7 @@ export default function Courses() {
   return (
     <div className="container-page py-10">
       <h1 className="text-3xl font-extrabold">{q ? `Results for “${q}”` : 'Explore courses'}</h1>
-      <p className="mt-1 text-slate-500">
+      <p className="mt-1 text-ink-muted">
         {data ? `${data.total} course${data.total === 1 ? '' : 's'} available` : 'Loading…'}
       </p>
 
@@ -63,7 +63,7 @@ export default function Courses() {
 
         <div>
           <div className="mb-5 flex items-center justify-end gap-2">
-            <span className="text-sm text-slate-500">Sort by</span>
+            <span className="text-sm text-ink-muted">Sort by</span>
             <select
               className="input w-auto"
               value={params.get('sort') || 'popular'}
@@ -121,10 +121,10 @@ export default function Courses() {
 function Filter({ title, options, value, onChange }) {
   return (
     <div>
-      <p className="mb-2 text-sm font-semibold text-slate-900">{title}</p>
+      <p className="mb-2 text-sm font-semibold text-ink">{title}</p>
       <div className="space-y-1.5">
         {options.map(([v, label]) => (
-          <label key={v} className="flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+          <label key={v} className="flex cursor-pointer items-center gap-2 text-sm text-ink-soft">
             <input
               type="radio"
               className="accent-brand-600"

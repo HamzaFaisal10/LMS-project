@@ -19,7 +19,7 @@ export default function MyLearning() {
   return (
     <div className="container-page py-10">
       <h1 className="text-3xl font-extrabold">Welcome back, {user.name.split(' ')[0]} 👋</h1>
-      <p className="mt-1 text-slate-500">Pick up where you left off and keep your streak going.</p>
+      <p className="mt-1 text-ink-muted">Pick up where you left off and keep your streak going.</p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard icon={BookOpen} label="Enrolled courses" value={list.length} />
@@ -36,7 +36,7 @@ export default function MyLearning() {
               Continue learning
             </p>
             <h2 className="mt-1 text-xl font-bold">{resume.course.title}</h2>
-            <p className="text-sm text-slate-500">{resume.course.instructor?.name}</p>
+            <p className="text-sm text-ink-muted">{resume.course.instructor?.name}</p>
             <div className="mt-4 flex items-center gap-3">
               <ProgressBar value={resume.progress} />
               <span className="text-sm font-semibold">{resume.progress}%</span>
@@ -75,10 +75,10 @@ export default function MyLearning() {
                 <h3 className="line-clamp-2 font-bold group-hover:text-brand-700">
                   {e.course.title}
                 </h3>
-                <p className="text-xs text-slate-500">{e.course.instructor?.name}</p>
+                <p className="text-xs text-ink-muted">{e.course.instructor?.name}</p>
                 <div className="mt-4 flex items-center gap-3">
                   <ProgressBar value={e.progress} />
-                  <span className="text-xs font-semibold text-slate-600">{e.progress}%</span>
+                  <span className="text-xs font-semibold text-ink-soft">{e.progress}%</span>
                 </div>
                 {e.progress === 100 ? (
                   <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-emerald-600">

@@ -13,7 +13,7 @@ export default function Stars({ rating = 0, count, size = 'h-3.5 w-3.5' }) {
         ))}
       </div>
       {count !== undefined && (
-        <span className="text-xs text-slate-500">({Number(count).toLocaleString()})</span>
+        <span className="text-xs text-ink-muted">({Number(count).toLocaleString()})</span>
       )}
     </div>
   );

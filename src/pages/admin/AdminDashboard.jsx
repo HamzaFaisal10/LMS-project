@@ -13,7 +13,7 @@ export default function AdminDashboard() {
   return (
     <div className="mx-auto max-w-6xl">
       <h1 className="text-2xl font-extrabold">Platform overview</h1>
-      <p className="text-sm text-slate-500">Everything happening on LearnHub at a glance.</p>
+      <p className="text-sm text-ink-muted">Everything happening on LearnHub at a glance.</p>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
@@ -65,14 +65,14 @@ export default function AdminDashboard() {
               {pending.map((c) => (
                 <li key={c._id} className="rounded-xl bg-amber-50/60 p-3">
                   <p className="text-sm font-semibold">{c.title}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-ink-muted">
                     by {c.instructor?.name} · {date(c.updatedAt)}
                   </p>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-slate-500">Nothing to review — all caught up. ✅</p>
+            <p className="text-sm text-ink-muted">Nothing to review — all caught up. ✅</p>
           )}
         </div>
       </div>
@@ -84,16 +84,16 @@ export default function AdminDashboard() {
             All users
           </Link>
         </div>
-        <ul className="divide-y divide-slate-100">
+        <ul className="divide-y divide-line">
           {recentUsers.map((u) => (
             <li key={u._id} className="flex items-center gap-3 py-3">
               <Avatar name={u.name} size="h-9 w-9 text-xs" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold">{u.name}</p>
-                <p className="truncate text-xs text-slate-500">{u.email}</p>
+                <p className="truncate text-xs text-ink-muted">{u.email}</p>
               </div>
               <StatusBadge status={u.role} />
-              <span className="hidden text-xs text-slate-500 sm:block">{date(u.createdAt)}</span>
+              <span className="hidden text-xs text-ink-muted sm:block">{date(u.createdAt)}</span>
             </li>
           ))}
         </ul>

@@ -29,7 +29,7 @@ export default function AdminUsers() {
   return (
     <div className="mx-auto max-w-6xl">
       <h1 className="text-2xl font-extrabold">Users</h1>
-      <p className="text-sm text-slate-500">Manage roles and account access.</p>
+      <p className="text-sm text-ink-muted">Manage roles and account access.</p>
       <div className="mt-6 flex flex-wrap gap-3">
         <form
           onSubmit={(e) => {
@@ -58,7 +58,7 @@ export default function AdminUsers() {
       ) : (
         <div className="card mt-4 overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="border-b border-slate-100 text-left text-xs uppercase text-slate-500">
+            <thead className="border-b border-line text-left text-xs uppercase text-ink-muted">
               <tr>
                 <th className="px-5 py-3">User</th>
                 <th className="px-5 py-3">Joined</th>
@@ -67,7 +67,7 @@ export default function AdminUsers() {
                 <th className="px-5 py-3"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-line">
               {data.map((u) => (
                 <tr key={u._id} className={u.isBlocked ? 'bg-rose-50/40' : ''}>
                   <td className="px-5 py-3">
@@ -75,11 +75,11 @@ export default function AdminUsers() {
                       <Avatar name={u.name} size="h-8 w-8 text-xs" />
                       <div>
                         <p className="font-medium">{u.name}</p>
-                        <p className="text-xs text-slate-500">{u.email}</p>
+                        <p className="text-xs text-ink-muted">{u.email}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-5 py-3 text-slate-500">{date(u.createdAt)}</td>
+                  <td className="px-5 py-3 text-ink-muted">{date(u.createdAt)}</td>
                   <td className="px-5 py-3">
                     <select
                       disabled={u._id === me._id}
@@ -118,7 +118,7 @@ export default function AdminUsers() {
             </tbody>
           </table>
           {!data.length && (
-            <p className="p-8 text-center text-sm text-slate-500">No users match your search.</p>
+            <p className="p-8 text-center text-sm text-ink-muted">No users match your search.</p>
           )}
         </div>
       )}

@@ -103,7 +103,7 @@ export default function Learn() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-950">
+    <div className="flex min-h-screen flex-col bg-ink">
       <header className="flex h-14 items-center gap-4 border-b border-white/10 px-4 text-white">
         <Link
           to={enrollment ? '/my-learning' : '/instructor/courses'}
@@ -172,7 +172,7 @@ export default function Learn() {
                   )}
                 </div>
                 {lesson?.description && (
-                  <p className="mt-4 leading-relaxed text-slate-600">{lesson.description}</p>
+                  <p className="mt-4 leading-relaxed text-ink-soft">{lesson.description}</p>
                 )}
 
                 {lesson?.resources?.length > 0 && (
@@ -183,7 +183,7 @@ export default function Learn() {
                         <li key={r._id}>
                           <button
                             onClick={() => download(r)}
-                            className="flex w-full items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-left text-sm hover:bg-slate-50"
+                            className="flex w-full items-center justify-between rounded-xl border border-line px-4 py-3 text-left text-sm hover:bg-paper"
                           >
                             <span className="flex items-center gap-2">
                               <FileText className="h-4 w-4 text-brand-600" /> {r.name}
@@ -196,7 +196,7 @@ export default function Learn() {
                   </div>
                 )}
 
-                <div className="mt-8 flex justify-between border-t border-slate-100 pt-6">
+                <div className="mt-8 flex justify-between border-t border-line pt-6">
                   <button
                     disabled={index <= 0}
                     onClick={() => go(lessons[index - 1]._id)}
@@ -228,18 +228,18 @@ export default function Learn() {
         </main>
 
         {sidebar && (
-          <aside className="fixed inset-y-14 right-0 z-30 w-80 overflow-y-auto border-l border-slate-200 bg-white sm:static">
-            <div className="border-b border-slate-100 p-4">
+          <aside className="fixed inset-y-14 right-0 z-30 w-80 overflow-y-auto border-l border-line bg-white sm:static">
+            <div className="border-b border-line p-4">
               <h2 className="font-bold">Course content</h2>
               {enrollment && (
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-ink-muted">
                   {completed.size} of {lessons.length} lessons complete
                 </p>
               )}
             </div>
             {course.sections.map((s, si) => (
               <div key={s._id}>
-                <p className="bg-slate-50 px-4 py-2.5 text-sm font-semibold">
+                <p className="bg-paper px-4 py-2.5 text-sm font-semibold">
                   Section {si + 1}: {s.title}
                 </p>
                 {s.lessons.map((l) => {
@@ -247,7 +247,7 @@ export default function Learn() {
                   return (
                     <div
                       key={l._id}
-                      className={`flex items-start gap-3 px-4 py-3 text-sm ${active ? 'bg-brand-50' : 'hover:bg-slate-50'}`}
+                      className={`flex items-start gap-3 px-4 py-3 text-sm ${active ? 'bg-brand-50' : 'hover:bg-paper'}`}
                     >
                       <button
                         onClick={() => enrollment && toggle(l._id)}
@@ -261,9 +261,7 @@ export default function Learn() {
                         )}
                       </button>
                       <button onClick={() => go(l._id)} className="flex-1 text-left">
-                        <span
-                          className={active ? 'font-semibold text-brand-700' : 'text-slate-700'}
-                        >
+                        <span className={active ? 'font-semibold text-brand-700' : 'text-ink-soft'}>
                           {l.title}
                         </span>
                         <span className="mt-0.5 flex items-center gap-1 text-xs text-slate-400">
@@ -278,12 +276,12 @@ export default function Learn() {
             ))}
             {quizzes.length > 0 && (
               <div>
-                <p className="bg-slate-50 px-4 py-2.5 text-sm font-semibold">Assessment</p>
+                <p className="bg-paper px-4 py-2.5 text-sm font-semibold">Assessment</p>
                 {quizzes.map((q) => (
                   <button
                     key={q._id}
                     onClick={() => setParams({ quiz: q._id })}
-                    className={`flex w-full items-start gap-3 px-4 py-3 text-left text-sm ${quizId === q._id ? 'bg-brand-50' : 'hover:bg-slate-50'}`}
+                    className={`flex w-full items-start gap-3 px-4 py-3 text-left text-sm ${quizId === q._id ? 'bg-brand-50' : 'hover:bg-paper'}`}
                   >
                     {q.passed ? (
                       <Award className="mt-0.5 h-4 w-4 text-emerald-600" />
@@ -291,7 +289,7 @@ export default function Learn() {
                       <ListChecks className="mt-0.5 h-4 w-4 text-brand-600" />
                     )}
                     <span>
-                      <span className="font-medium text-slate-700">{q.title}</span>
+                      <span className="font-medium text-ink-soft">{q.title}</span>
                       <span className="block text-xs text-slate-400">
                         {q.questionCount} questions ·{' '}
                         {q.bestScore !== null

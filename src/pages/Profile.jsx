@@ -41,7 +41,7 @@ export default function Profile() {
         <Avatar name={user.name} size="h-16 w-16 text-xl" />
         <div>
           <h1 className="text-2xl font-extrabold">{user.name}</h1>
-          <p className="text-sm capitalize text-slate-500">
+          <p className="text-sm capitalize text-ink-muted">
             {user.role} · {user.email}
           </p>
         </div>

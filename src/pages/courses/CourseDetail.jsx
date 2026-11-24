@@ -75,7 +75,7 @@ export default function CourseDetail() {
           {money(course.price)}
         </p>
         {user && user.role !== 'student' && !course.isEnrolled ? (
-          <p className="mt-4 rounded-lg bg-slate-50 p-3 text-sm text-slate-600">
+          <p className="mt-4 rounded-lg bg-paper p-3 text-sm text-ink-soft">
             {isOwner
               ? 'You are viewing your own course.'
               : 'Log in as a student to enroll in courses.'}
@@ -90,9 +90,9 @@ export default function CourseDetail() {
           </button>
         )}
         {course.price > 0 && !course.isEnrolled && (
-          <p className="mt-2 text-center text-xs text-slate-500">30-day money-back guarantee</p>
+          <p className="mt-2 text-center text-xs text-ink-muted">30-day money-back guarantee</p>
         )}
-        <ul className="mt-5 space-y-2.5 text-sm text-slate-600">
+        <ul className="mt-5 space-y-2.5 text-sm text-ink-soft">
           <li className="flex items-center gap-2">
             <PlayCircle className="h-4 w-4" /> {course.lessonCount} video lessons
           </li>
@@ -112,7 +112,7 @@ export default function CourseDetail() {
 
   return (
     <>
-      <section className="bg-slate-950 text-white">
+      <section className="bg-ink text-white">
         <div className="container-page grid gap-10 py-12 lg:grid-cols-[1fr_360px]">
           <div>
             <div className="flex gap-2 text-sm text-brand-300">
@@ -157,7 +157,7 @@ export default function CourseDetail() {
               <h2 className="text-xl font-bold">What you&apos;ll learn</h2>
               <ul className="mt-4 grid gap-3 sm:grid-cols-2">
                 {course.outcomes.map((o) => (
-                  <li key={o} className="flex gap-2 text-sm text-slate-700">
+                  <li key={o} className="flex gap-2 text-sm text-ink-soft">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" /> {o}
                   </li>
                 ))}
@@ -167,16 +167,16 @@ export default function CourseDetail() {
 
           <div>
             <h2 className="text-xl font-bold">Course content</h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-ink-muted">
               {course.sections.length} sections · {course.lessonCount} lessons ·{' '}
               {minutes(course.totalMinutes)} total
             </p>
-            <div className="mt-4 divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            <div className="mt-4 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white">
               {course.sections.map((s, i) => (
                 <div key={s._id}>
                   <button
                     onClick={() => setOpen({ ...open, [i]: !open[i] })}
-                    className="flex w-full items-center justify-between bg-slate-50 px-5 py-4 text-left"
+                    className="flex w-full items-center justify-between bg-paper px-5 py-4 text-left"
                   >
                     <span className="flex items-center gap-2 font-semibold">
                       <ChevronDown
@@ -184,7 +184,7 @@ export default function CourseDetail() {
                       />{' '}
                       {s.title}
                     </span>
-                    <span className="text-xs text-slate-500">{s.lessons.length} lessons</span>
+                    <span className="text-xs text-ink-muted">{s.lessons.length} lessons</span>
                   </button>
                   {open[i] && (
                     <ul>
@@ -193,7 +193,7 @@ export default function CourseDetail() {
                           key={l._id}
                           className="flex items-center justify-between px-5 py-3 text-sm"
                         >
-                          <span className="flex items-center gap-3 text-slate-700">
+                          <span className="flex items-center gap-3 text-ink-soft">
                             {l.isPreview ? (
                               <PlayCircle className="h-4 w-4 text-brand-600" />
                             ) : (
@@ -213,7 +213,7 @@ export default function CourseDetail() {
                               <span className="badge bg-brand-50 text-brand-700">Preview</span>
                             )}
                           </span>
-                          <span className="text-xs text-slate-500">{minutes(l.duration)}</span>
+                          <span className="text-xs text-ink-muted">{minutes(l.duration)}</span>
                         </li>
                       ))}
                     </ul>
@@ -226,7 +226,7 @@ export default function CourseDetail() {
           {course.requirements?.length > 0 && (
             <div>
               <h2 className="text-xl font-bold">Requirements</h2>
-              <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-700">
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-ink-soft">
                 {course.requirements.map((r) => (
                   <li key={r}>{r}</li>
                 ))}
@@ -236,7 +236,7 @@ export default function CourseDetail() {
 
           <div>
             <h2 className="text-xl font-bold">Description</h2>
-            <p className="mt-3 whitespace-pre-line leading-relaxed text-slate-700">
+            <p className="mt-3 whitespace-pre-line leading-relaxed text-ink-soft">
               {course.description}
             </p>
           </div>
@@ -247,16 +247,16 @@ export default function CourseDetail() {
               <Avatar name={course.instructor.name} size="h-16 w-16 text-xl" />
               <div>
                 <p className="text-lg font-bold text-brand-700">{course.instructor.name}</p>
-                <p className="text-sm text-slate-500">{course.instructor.headline}</p>
+                <p className="text-sm text-ink-muted">{course.instructor.headline}</p>
               </div>
             </div>
-            <div className="mt-4 flex gap-6 text-sm text-slate-600">
+            <div className="mt-4 flex gap-6 text-sm text-ink-soft">
               <span>⭐ {course.instructorStats.rating} rating</span>
               <span>{course.instructorStats.students.toLocaleString()} students</span>
               <span>{course.instructorStats.courses} courses</span>
             </div>
             {course.instructor.bio && (
-              <p className="mt-4 text-sm leading-relaxed text-slate-600">{course.instructor.bio}</p>
+              <p className="mt-4 text-sm leading-relaxed text-ink-soft">{course.instructor.bio}</p>
             )}
           </div>
         </div>

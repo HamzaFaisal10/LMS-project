@@ -10,7 +10,7 @@ export default function Purchases() {
   return (
     <div className="container-page max-w-4xl py-10">
       <h1 className="text-3xl font-extrabold">Purchase history</h1>
-      <p className="mt-1 text-slate-500">All your course payments in one place.</p>
+      <p className="mt-1 text-ink-muted">All your course payments in one place.</p>
       <div className="mt-8">
         {!data?.length ? (
           <EmptyState
@@ -26,7 +26,7 @@ export default function Purchases() {
         ) : (
           <div className="card overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="border-b border-slate-100 text-left text-xs uppercase text-slate-500">
+              <thead className="border-b border-line text-left text-xs uppercase text-ink-muted">
                 <tr>
                   <th className="px-5 py-3">Course</th>
                   <th className="px-5 py-3">Date</th>
@@ -35,7 +35,7 @@ export default function Purchases() {
                   <th className="px-5 py-3">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-line">
                 {data.map((p) => (
                   <tr key={p._id}>
                     <td className="px-5 py-3 font-medium">
@@ -47,8 +47,8 @@ export default function Purchases() {
                         '—'
                       )}
                     </td>
-                    <td className="px-5 py-3 text-slate-500">{date(p.createdAt)}</td>
-                    <td className="px-5 py-3 text-slate-500">
+                    <td className="px-5 py-3 text-ink-muted">{date(p.createdAt)}</td>
+                    <td className="px-5 py-3 text-ink-muted">
                       {p.cardBrand} •••• {p.cardLast4}
                     </td>
                     <td className="px-5 py-3 font-semibold">{money(p.amount)}</td>

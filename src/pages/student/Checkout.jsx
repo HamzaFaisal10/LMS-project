@@ -76,11 +76,11 @@ export default function Checkout() {
             <CheckCircle2 className="h-10 w-10" />
           </div>
           <h1 className="text-2xl font-extrabold">You&apos;re in! 🎉</h1>
-          <p className="mt-2 text-slate-500">
+          <p className="mt-2 text-ink-muted">
             Payment of <b>{money(paid.amount)}</b> confirmed. You now have lifetime access to{' '}
             <b>{course.title}</b>.
           </p>
-          <div className="mt-5 rounded-xl bg-slate-50 p-4 text-left text-sm text-slate-600">
+          <div className="mt-5 rounded-xl bg-paper p-4 text-left text-sm text-ink-soft">
             <p>
               Transaction: <span className="font-mono text-xs">{paid.transactionId}</span>
             </p>
@@ -174,7 +174,7 @@ export default function Checkout() {
             {busy ? <Spinner className="h-4 w-4 text-white" /> : <Lock className="h-4 w-4" />} Pay{' '}
             {money(course.price)}
           </button>
-          <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-slate-500">
+          <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-ink-muted">
             <ShieldCheck className="h-3.5 w-3.5" /> Secure checkout · Stripe-style demo processor
           </p>
         </form>
@@ -183,17 +183,17 @@ export default function Checkout() {
           <CourseThumb course={course} className="aspect-video" />
           <div className="p-5">
             <p className="font-bold">{course.title}</p>
-            <p className="text-sm text-slate-500">{course.instructor.name}</p>
-            <div className="mt-4 space-y-2 border-t border-slate-100 pt-4 text-sm">
+            <p className="text-sm text-ink-muted">{course.instructor.name}</p>
+            <div className="mt-4 space-y-2 border-t border-line pt-4 text-sm">
               <div className="flex justify-between">
-                <span className="text-slate-500">Original price</span>
+                <span className="text-ink-muted">Original price</span>
                 <span>{money(course.price)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Tax</span>
+                <span className="text-ink-muted">Tax</span>
                 <span>$0.00</span>
               </div>
-              <div className="flex justify-between border-t border-slate-100 pt-2 text-base font-bold">
+              <div className="flex justify-between border-t border-line pt-2 text-base font-bold">
                 <span>Total</span>
                 <span>{money(course.price)}</span>
               </div>
