@@ -14,7 +14,7 @@ const DEMOS = [
     icon: Presentation,
     tone: 'text-violet-600 bg-violet-50',
   },
-  { role: 'admin', label: 'Admin', icon: ShieldCheck, tone: 'text-slate-900 bg-slate-100' },
+  { role: 'admin', label: 'Admin', icon: ShieldCheck, tone: 'text-ink bg-slate-100' },
 ];
 
 export default function Login() {
@@ -64,7 +64,7 @@ export default function Login() {
               key={role}
               onClick={() => demo(role)}
               disabled={!!busy}
-              className="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-3 text-sm font-semibold text-slate-700 transition hover:border-brand-300 hover:shadow-card disabled:opacity-60"
+              className="flex flex-col items-center gap-2 rounded-xl border border-line bg-white p-3 text-sm font-semibold text-ink-soft transition hover:border-brand-300 hover:shadow-card disabled:opacity-60"
             >
               <span className={`rounded-lg p-2 ${tone}`}>
                 {busy === role ? <Spinner className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
@@ -107,7 +107,7 @@ export default function Login() {
           {busy === 'form' && <Spinner className="h-4 w-4 text-white" />} Log in
         </button>
       </form>
-      <p className="mt-6 text-center text-sm text-slate-500">
+      <p className="mt-6 text-center text-sm text-ink-muted">
         New to LearnHub?{' '}
         <Link to="/register" className="font-semibold text-brand-600 hover:underline">
           Create an account

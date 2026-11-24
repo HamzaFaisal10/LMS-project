@@ -15,11 +15,11 @@ export default function CourseCard({ course }) {
         <h3 className="line-clamp-2 text-[15px] font-bold leading-snug group-hover:text-brand-700">
           {course.title}
         </h3>
-        <p className="mt-1 text-xs text-slate-500">{course.instructor?.name}</p>
+        <p className="mt-1 text-xs text-ink-muted">{course.instructor?.name}</p>
         <div className="mt-2">
           <Stars rating={course.rating} count={course.ratingCount} />
         </div>
-        <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
+        <div className="mt-2 flex items-center gap-3 text-xs text-ink-muted">
           <span className="flex items-center gap-1">
             <PlayCircle className="h-3.5 w-3.5" /> {course.lessonCount} lessons
           </span>
@@ -29,11 +29,11 @@ export default function CourseCard({ course }) {
         </div>
         <div className="mt-auto flex items-center justify-between pt-4">
           <span
-            className={`text-lg font-extrabold ${course.price === 0 ? 'text-emerald-600' : 'text-slate-900'}`}
+            className={`text-lg font-extrabold ${course.price === 0 ? 'text-emerald-600' : 'text-ink'}`}
           >
             {money(course.price)}
           </span>
-          <span className="badge bg-slate-100 text-slate-600">{course.level}</span>
+          <span className="badge bg-slate-100 text-ink-soft">{course.level}</span>
         </div>
       </div>
     </Link>

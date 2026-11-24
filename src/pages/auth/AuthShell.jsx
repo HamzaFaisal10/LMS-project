@@ -31,7 +31,7 @@ export default function AuthShell({ title, subtitle, children }) {
             <Logo />
           </div>
           <h1 className="text-3xl font-extrabold">{title}</h1>
-          {subtitle && <p className="mt-2 text-slate-500">{subtitle}</p>}
+          {subtitle && <p className="mt-2 text-ink-muted">{subtitle}</p>}
           <div className="mt-8">{children}</div>
         </div>
       </div>

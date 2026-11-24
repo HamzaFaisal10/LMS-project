@@ -41,7 +41,7 @@ export default function Register() {
             key={r}
             type="button"
             onClick={() => setForm({ ...form, role: r })}
-            className={`rounded-lg py-2 text-sm font-semibold capitalize transition ${form.role === r ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}
+            className={`rounded-lg py-2 text-sm font-semibold capitalize transition ${form.role === r ? 'bg-white text-ink shadow-sm' : 'text-ink-muted'}`}
           >
             I want to {r === 'student' ? 'learn' : 'teach'}
           </button>
@@ -85,7 +85,7 @@ export default function Register() {
           {busy && <Spinner className="h-4 w-4 text-white" />} Create account
         </button>
       </form>
-      <p className="mt-6 text-center text-sm text-slate-500">
+      <p className="mt-6 text-center text-sm text-ink-muted">
         Already have an account?{' '}
         <Link to="/login" className="font-semibold text-brand-600 hover:underline">
           Log in

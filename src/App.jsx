@@ -55,7 +55,7 @@ function NotFound() {
     <div className="container-page flex flex-col items-center py-24 text-center">
       <p className="font-display text-7xl font-extrabold text-brand-600">404</p>
       <h1 className="mt-4 text-2xl font-extrabold">This page went off-syllabus</h1>
-      <p className="mt-2 text-slate-500">
+      <p className="mt-2 text-ink-muted">
         The page you are looking for doesn&apos;t exist or has moved.
       </p>
       <Link to="/" className="btn-primary mt-6">

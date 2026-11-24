@@ -37,7 +37,7 @@ export default function AdminCategories() {
   return (
     <div className="mx-auto max-w-3xl">
       <h1 className="text-2xl font-extrabold">Categories</h1>
-      <p className="text-sm text-slate-500">Organise the catalog.</p>
+      <p className="text-sm text-ink-muted">Organise the catalog.</p>
       <form onSubmit={add} className="card mt-6 flex flex-wrap gap-3 p-4">
         <input
           required
@@ -58,7 +58,7 @@ export default function AdminCategories() {
           <Plus className="h-4 w-4" /> Add
         </button>
       </form>
-      <ul className="card mt-4 divide-y divide-slate-100">
+      <ul className="card mt-4 divide-y divide-line">
         {data.map((c) => {
           const Icon = ICONS[c.icon] || BookOpen;
           return (
@@ -67,7 +67,7 @@ export default function AdminCategories() {
                 <Icon className="h-4 w-4" />
               </span>
               <span className="flex-1 font-medium">{c.name}</span>
-              <span className="text-sm text-slate-500">{c.courseCount} courses</span>
+              <span className="text-sm text-ink-muted">{c.courseCount} courses</span>
               <button
                 onClick={() => remove(c)}
                 className="btn-ghost px-2 text-rose-600"

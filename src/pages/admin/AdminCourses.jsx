@@ -49,7 +49,7 @@ export default function AdminCourses() {
   return (
     <div className="mx-auto max-w-6xl">
       <h1 className="text-2xl font-extrabold">Courses</h1>
-      <p className="text-sm text-slate-500">Review submissions and moderate the catalog.</p>
+      <p className="text-sm text-ink-muted">Review submissions and moderate the catalog.</p>
       <div className="mt-6 flex flex-wrap gap-2">
         {FILTERS.map(([v, label]) => (
           <button
@@ -75,10 +75,10 @@ export default function AdminCourses() {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <StatusBadge status={c.status} />
-                  <span className="text-xs text-slate-500">{c.category?.name}</span>
+                  <span className="text-xs text-ink-muted">{c.category?.name}</span>
                 </div>
                 <h3 className="mt-1 truncate font-bold">{c.title}</h3>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-ink-muted">
                   by {c.instructor?.name} · {c.lessonCount} lessons · {money(c.price)} · updated{' '}
                   {date(c.updatedAt)}
                 </p>

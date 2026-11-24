@@ -52,7 +52,7 @@ export default function InstructorCourses() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-extrabold">My courses</h1>
-          <p className="text-sm text-slate-500">Create, edit and publish your courses.</p>
+          <p className="text-sm text-ink-muted">Create, edit and publish your courses.</p>
         </div>
         <button onClick={() => setOpen(true)} className="btn-primary">
           <Plus className="h-4 w-4" /> New course
@@ -80,10 +80,10 @@ export default function InstructorCourses() {
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <StatusBadge status={c.status} />
-                  <span className="text-xs text-slate-500">{c.category?.name}</span>
+                  <span className="text-xs text-ink-muted">{c.category?.name}</span>
                 </div>
                 <h3 className="mt-1 truncate font-bold">{c.title}</h3>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-ink-muted">
                   {c.lessonCount} lessons · {money(c.price)}
                 </p>
                 {c.status === 'rejected' && c.rejectionReason && (
@@ -93,11 +93,11 @@ export default function InstructorCourses() {
               <div className="flex gap-6 text-center text-sm">
                 <div>
                   <p className="font-bold">{c.enrollments}</p>
-                  <p className="text-xs text-slate-500">Students</p>
+                  <p className="text-xs text-ink-muted">Students</p>
                 </div>
                 <div>
                   <p className="font-bold">{usd(c.revenue)}</p>
-                  <p className="text-xs text-slate-500">Revenue</p>
+                  <p className="text-xs text-ink-muted">Revenue</p>
                 </div>
               </div>
               <div className="flex gap-1">

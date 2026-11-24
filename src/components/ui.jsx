@@ -22,20 +22,26 @@ export function EmptyState({ icon: Icon, title, text, action }) {
         </div>
       )}
       <h3 className="text-lg font-bold">{title}</h3>
-      {text && <p className="mt-1 max-w-sm text-sm text-slate-500">{text}</p>}
+      {text && <p className="mt-1 max-w-sm text-sm text-ink-muted">{text}</p>}
       {action && <div className="mt-5">{action}</div>}
     </div>
   );
 }
 
+const AVATAR_TONES = [
+  'bg-brand-100 text-brand-700',
+  'bg-[#DDEFEA] text-[#0B4F44]',
+  'bg-[#F3E3A6] text-[#5C4A0B]',
+  'bg-[#F6C9B9] text-[#7A2E1A]',
+  'bg-ink text-white',
+];
+
 export function Avatar({ name, size = 'h-9 w-9 text-sm', className = '' }) {
-  const hue = [...(name || 'U')].reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
+  const tone =
+    AVATAR_TONES[[...(name || 'U')].reduce((a, c) => a + c.charCodeAt(0), 0) % AVATAR_TONES.length];
   return (
     <div
-      className={`flex shrink-0 items-center justify-center rounded-full font-semibold text-white ${size} ${className}`}
-      style={{
-        background: `linear-gradient(135deg, hsl(${hue} 70% 55%), hsl(${(hue + 40) % 360} 70% 45%))`,
-      }}
+      className={`flex shrink-0 items-center justify-center rounded-full font-semibold ${tone} ${size} ${className}`}
     >
       {initials(name)}
     </div>
@@ -46,7 +52,7 @@ export function ProgressBar({ value, className = '' }) {
   return (
     <div className={`h-2 w-full overflow-hidden rounded-full bg-slate-100 ${className}`}>
       <div
-        className="h-full rounded-full bg-gradient-to-r from-brand-500 to-violet-500 transition-all"
+        className="h-full rounded-full bg-brand-600 transition-all"
         style={{ width: `${Math.min(100, value || 0)}%` }}
       />
     </div>
@@ -56,7 +62,7 @@ export function ProgressBar({ value, className = '' }) {
 const STATUS = {
   published: 'bg-emerald-50 text-emerald-700',
   pending: 'bg-amber-50 text-amber-700',
-  draft: 'bg-slate-100 text-slate-600',
+  draft: 'bg-slate-100 text-ink-soft',
   rejected: 'bg-rose-50 text-rose-700',
   paid: 'bg-emerald-50 text-emerald-700',
   failed: 'bg-rose-50 text-rose-700',
@@ -67,7 +73,7 @@ const STATUS = {
 
 export function StatusBadge({ status }) {
   return (
-    <span className={`badge capitalize ${STATUS[status] || 'bg-slate-100 text-slate-600'}`}>
+    <span className={`badge capitalize ${STATUS[status] || 'bg-slate-100 text-ink-soft'}`}>
       {status}
     </span>
   );
@@ -83,15 +89,15 @@ export function StatCard({ icon: Icon, label, value, hint, tone = 'brand' }) {
   return (
     <div className="card p-5">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-slate-500">{label}</p>
+        <p className="text-sm font-medium text-ink-muted">{label}</p>
         {Icon && (
           <div className={`rounded-lg p-2 ${tones[tone]}`}>
             <Icon className="h-4 w-4" />
           </div>
         )}
       </div>
-      <p className="mt-3 font-display text-2xl font-bold text-slate-900">{value}</p>
-      {hint && <p className="mt-1 text-xs text-slate-500">{hint}</p>}
+      <p className="mt-3 font-display text-2xl font-bold text-ink">{value}</p>
+      {hint && <p className="mt-1 text-xs text-ink-muted">{hint}</p>}
     </div>
   );
 }

@@ -65,9 +65,9 @@ export default function Navbar({ compact }) {
               </button>
               {menu && (
                 <div className="card absolute right-0 mt-2 w-60 overflow-hidden p-1.5">
-                  <div className="border-b border-slate-100 px-3 pb-3 pt-2">
-                    <p className="truncate font-semibold text-slate-900">{user.name}</p>
-                    <p className="truncate text-xs text-slate-500">{user.email}</p>
+                  <div className="border-b border-line px-3 pb-3 pt-2">
+                    <p className="truncate font-semibold text-ink">{user.name}</p>
+                    <p className="truncate text-xs text-ink-muted">{user.email}</p>
                     <span className="badge mt-2 bg-brand-50 capitalize text-brand-700">
                       {user.role}
                     </span>
@@ -123,7 +123,7 @@ export default function Navbar({ compact }) {
         </div>
       </div>
       {mobile && (
-        <div className="border-t border-slate-100 bg-white lg:hidden">
+        <div className="border-t border-line bg-white lg:hidden">
           <div className="container-page flex flex-col gap-3 py-4">
             <form onSubmit={search}>
               <input
@@ -186,7 +186,7 @@ function MenuItem({ to, icon: Icon, children, onClick }) {
     <Link
       to={to}
       onClick={onClick}
-      className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+      className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-soft hover:bg-paper"
     >
       <Icon className="h-4 w-4 text-slate-400" /> {children}
     </Link>

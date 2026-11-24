@@ -19,7 +19,7 @@ export default function InstructorDashboard() {
           <h1 className="text-2xl font-extrabold">
             Hi {user.name.split(' ')[0]}, here&apos;s how your courses are doing
           </h1>
-          <p className="text-sm text-slate-500">Overview of students, revenue and performance.</p>
+          <p className="text-sm text-ink-muted">Overview of students, revenue and performance.</p>
         </div>
         <Link to="/instructor/courses?new=1" className="btn-primary">
           <Plus className="h-4 w-4" /> New course
@@ -81,13 +81,13 @@ export default function InstructorDashboard() {
                   </Link>
                   <span className="text-sm font-bold">{usd(c.revenue)}</span>
                 </div>
-                <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">
+                <div className="mt-1 flex items-center gap-2 text-xs text-ink-muted">
                   <StatusBadge status={c.status} /> {c.students} students
                 </div>
               </li>
             ))}
             {!courses.length && (
-              <p className="text-sm text-slate-500">Create your first course to see stats here.</p>
+              <p className="text-sm text-ink-muted">Create your first course to see stats here.</p>
             )}
           </ul>
         </div>

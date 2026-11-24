@@ -22,6 +22,8 @@ export default {
           900: '#312e81',
         },
         ink: { DEFAULT: '#0B1220', soft: '#3B4256', muted: '#5B6478' },
+        line: '#E8EAF1',
+        paper: '#FAFBFD',
       },
       boxShadow: {
         card: '0 1px 2px rgba(16,24,40,.04), 0 4px 16px rgba(16,24,40,.06)',

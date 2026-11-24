@@ -13,13 +13,13 @@ export default function AdminPayments() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold">Payments</h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-ink-muted">
             Every transaction processed on the platform (demo processor).
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-sm text-slate-500">
-            Paid total: <b className="text-slate-900">{usd(total)}</b>
+          <span className="text-sm text-ink-muted">
+            Paid total: <b className="text-ink">{usd(total)}</b>
           </span>
           <select
             className="input w-auto"
@@ -37,7 +37,7 @@ export default function AdminPayments() {
       ) : (
         <div className="card mt-6 overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="border-b border-slate-100 text-left text-xs uppercase text-slate-500">
+            <thead className="border-b border-line text-left text-xs uppercase text-ink-muted">
               <tr>
                 <th className="px-5 py-3">Transaction</th>
                 <th className="px-5 py-3">Student</th>
@@ -47,20 +47,20 @@ export default function AdminPayments() {
                 <th className="px-5 py-3">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-line">
               {data.map((p) => (
                 <tr key={p._id}>
                   <td className="px-5 py-3">
                     <p className="font-mono text-xs">{p.transactionId}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-ink-muted">
                       {p.cardBrand} •••• {p.cardLast4}
                     </p>
                   </td>
                   <td className="px-5 py-3">{p.user?.name || '—'}</td>
-                  <td className="max-w-[220px] truncate px-5 py-3 text-slate-600">
+                  <td className="max-w-[220px] truncate px-5 py-3 text-ink-soft">
                     {p.course?.title || '—'}
                   </td>
-                  <td className="px-5 py-3 text-slate-500">{date(p.createdAt)}</td>
+                  <td className="px-5 py-3 text-ink-muted">{date(p.createdAt)}</td>
                   <td className="px-5 py-3 font-semibold">{money(p.amount)}</td>
                   <td className="px-5 py-3">
                     <StatusBadge status={p.status} />
@@ -70,7 +70,7 @@ export default function AdminPayments() {
             </tbody>
           </table>
           {!data.length && (
-            <p className="p-8 text-center text-sm text-slate-500">No payments yet.</p>
+            <p className="p-8 text-center text-sm text-ink-muted">No payments yet.</p>
           )}
         </div>
       )}

@@ -14,7 +14,7 @@ export default function InstructorStudents() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold">Students</h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-ink-muted">
             Everyone learning from your courses and how far they&apos;ve got.
           </p>
         </div>
@@ -40,7 +40,7 @@ export default function InstructorStudents() {
       ) : (
         <div className="card mt-6 overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="border-b border-slate-100 text-left text-xs uppercase text-slate-500">
+            <thead className="border-b border-line text-left text-xs uppercase text-ink-muted">
               <tr>
                 <th className="px-5 py-3">Student</th>
                 <th className="px-5 py-3">Course</th>
@@ -48,7 +48,7 @@ export default function InstructorStudents() {
                 <th className="w-48 px-5 py-3">Progress</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-line">
               {data.map((e) => (
                 <tr key={e._id}>
                   <td className="px-5 py-3">
@@ -56,12 +56,12 @@ export default function InstructorStudents() {
                       <Avatar name={e.user.name} size="h-8 w-8 text-xs" />
                       <div>
                         <p className="font-medium">{e.user.name}</p>
-                        <p className="text-xs text-slate-500">{e.user.email}</p>
+                        <p className="text-xs text-ink-muted">{e.user.email}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-5 py-3 text-slate-600">{e.course.title}</td>
-                  <td className="px-5 py-3 text-slate-500">{date(e.createdAt)}</td>
+                  <td className="px-5 py-3 text-ink-soft">{e.course.title}</td>
+                  <td className="px-5 py-3 text-ink-muted">{date(e.createdAt)}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-2">
                       <ProgressBar value={e.progress} />
