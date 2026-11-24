@@ -4,13 +4,13 @@ import Logo from '../../components/Logo';
 export default function AuthShell({ title, subtitle, children }) {
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
-      <div className="relative hidden overflow-hidden bg-gradient-to-br from-brand-700 via-brand-600 to-violet-700 p-12 text-white lg:flex lg:flex-col">
+      <div className="relative hidden overflow-hidden bg-ink p-12 text-white lg:flex lg:flex-col">
         <Logo light />
         <div className="my-auto max-w-md">
           <h2 className="text-4xl font-extrabold leading-tight text-white">
-            Learn the skills that move your career forward.
+            Learn the skills that <span className="text-brand-300">move your career</span> forward.
           </h2>
-          <ul className="mt-8 space-y-3 text-brand-50">
+          <ul className="mt-8 space-y-3 text-slate-300">
             {[
               'Expert-led video courses',
               'Track progress lesson by lesson',
@@ -18,13 +18,12 @@ export default function AuthShell({ title, subtitle, children }) {
               'Teach and earn as an instructor',
             ].map((t) => (
               <li key={t} className="flex items-center gap-3">
-                <CheckCircle2 className="h-5 w-5 text-emerald-300" /> {t}
+                <CheckCircle2 className="h-5 w-5 text-[#A3E635]" /> {t}
               </li>
             ))}
           </ul>
         </div>
-        <div className="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-white/10" />
-        <div className="absolute -right-10 top-24 h-40 w-40 rounded-full bg-white/5" />
+        <div className="absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(79,70,229,0.35),rgba(79,70,229,0)_65%)]" />
       </div>
       <div className="flex items-center justify-center p-6 sm:p-12">
         <div className="w-full max-w-md">

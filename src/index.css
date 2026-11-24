@@ -7,7 +7,7 @@
   h2,
   h3,
   h4 {
-    @apply font-display text-slate-900;
+    @apply font-display text-ink;
   }
 }
 
@@ -41,5 +41,15 @@
   }
   .badge {
     @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+}
+
+@layer utilities {
+  /* Subtle engineering-paper grid used behind the hero */
+  .bg-grid {
+    background-image:
+      linear-gradient(#eef0f6 1px, transparent 1px),
+      linear-gradient(90deg, #eef0f6 1px, transparent 1px);
+    background-size: 48px 48px;
   }
 }
